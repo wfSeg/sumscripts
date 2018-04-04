@@ -1,0 +1,447 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"folder",
+				"folderName"
+			],
+			[
+				"get",
+				"getcwd"
+			],
+			[
+				"play",
+				"playlistFile"
+			],
+			[
+				"pla",
+				"playlistFile"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "hi.sh",
+			"settings":
+			{
+				"buffer_size": 59,
+				"encoding": "UTF-8",
+				"line_ending": "Unix",
+				"name": "#!/bin/bash"
+			}
+		},
+		{
+			"file": "sumtest.sh",
+			"settings":
+			{
+				"buffer_size": 92,
+				"encoding": "UTF-8",
+				"line_ending": "Windows"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 170.0,
+		"last_filter": "git push",
+		"selected_items":
+		[
+			[
+				"git push",
+				"Git: Push"
+			],
+			[
+				"git comm",
+				"Git: Commit"
+			],
+			[
+				"git qui",
+				"Git: Quick Add"
+			],
+			[
+				"git commit",
+				"Git: Commit"
+			],
+			[
+				"git quic",
+				"Git: Quick Add"
+			],
+			[
+				"git com",
+				"Git: Commit"
+			],
+			[
+				"git quick",
+				"Git: Quick Add"
+			],
+			[
+				"git commi",
+				"Git: Commit"
+			],
+			[
+				"git add",
+				"Git: Quick Add"
+			],
+			[
+				"git diff",
+				"Git: Diff"
+			],
+			[
+				"git  quick",
+				"Git: Quick Add"
+			],
+			[
+				"git q",
+				"Git: Quick Add"
+			],
+			[
+				"repl",
+				"SublimeREPL: Python"
+			],
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"git: add",
+				"Git: Quick Add"
+			],
+			[
+				"git init",
+				"Git: Init"
+			],
+			[
+				"git ini",
+				"Git-flow: Init With Defaults"
+			],
+			[
+				"git",
+				"Git: Push"
+			],
+			[
+				"Package Control: remove",
+				"Package Control: Remove Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Remove Package"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"package control: Install",
+				"Package Control: Install Package"
+			],
+			[
+				"Git:add",
+				"Git: Add Remote"
+			],
+			[
+				"gs",
+				"Git: Status"
+			],
+			[
+				"git:init",
+				"Git: Init"
+			],
+			[
+				"git:ini",
+				"Git: Init"
+			],
+			[
+				"package",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 412.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"expanded_folders":
+	[
+		"/S/Desktop/transfer/sumscripts"
+	],
+	"file_history":
+	[
+		"/S/Desktop/transfer/automatetheboringstuff/box.py",
+		"/S/Desktop/transfer/automatetheboringstuff/temp.py",
+		"/S/Desktop/transfer/automatetheboringstuff/walking_directory_tree.py",
+		"/S/Desktop/transfer/automatetheboringstuff/dryrun.py",
+		"/S/Desktop/transfer/automatetheboringstuff/regex.py",
+		"/C/Users/Isador/AppData/Roaming/Sublime Text 3/Packages/User/SublimeREPL.sublime-settings",
+		"/C/Users/Isador/AppData/Roaming/Sublime Text 3/Packages/SublimeREPL/SublimeREPL.sublime-settings",
+		"/C/Users/Isador/AppData/Roaming/Sublime Text 3/Packages/User/Main.sublime-menu",
+		"/S/Desktop/transfer/automatetheboringstuff/shutil.py",
+		"/S/Desktop/transfer/automatetheboringstuff/regex2.py",
+		"/S/Desktop/transfer/automatetheboringstuff/regexphone.py",
+		"/S/Desktop/transfer/automatetheboringstuff/parsing.py",
+		"/S/Desktop/transfer/automatetheboringstuff/filepath.py",
+		"/S/Desktop/transfer/automatetheboringstuff/playlistedit.py",
+		"/S/Desktop/transfer/automatetheboringstuff/labdata_regex.py",
+		"/S/Desktop/transfer/automatetheboringstuff/regex..py",
+		"/S/Desktop/transfer/automatetheboringstuff/sublimegittest.py",
+		"/S/Desktop/transfer/automatetheboringstuff/if_else_example.py",
+		"/S/Desktop/transfer/automatetheboringstuff/if_elif_example.py",
+		"/S/Desktop/transfer/automatetheboringstuff/hellofunction.py",
+		"/S/Desktop/transfer/automatetheboringstuff/automatecourse.sublime-project",
+		"/S/Desktop/transfer/automatetheboringstuff/catsiown.py",
+		"/S/Desktop/transfer/automatetheboringstuff/chp3 hello.py",
+		"/S/Desktop/transfer/automatetheboringstuff/dictionary.py",
+		"/S/Desktop/transfer/automatetheboringstuff/example.py",
+		"/S/Desktop/transfer/automatetheboringstuff/fivetimes.py",
+		"/S/Desktop/transfer/automatetheboringstuff/guess.py",
+		"/S/Desktop/transfer/automatetheboringstuff/hello.bat",
+		"/S/Desktop/transfer/automatetheboringstuff/hello.py",
+		"/S/Desktop/transfer/automatetheboringstuff/ifexample.py",
+		"/S/Desktop/transfer/automatetheboringstuff/phone.py",
+		"/S/Desktop/transfer/automatetheboringstuff/plusOne.py",
+		"/S/Desktop/transfer/automatetheboringstuff/showinglistsreference.py",
+		"/S/Desktop/transfer/automatetheboringstuff/sysexit.py",
+		"/S/Desktop/transfer/automatetheboringstuff/test.py",
+		"/S/Desktop/transfer/automatetheboringstuff/total.py",
+		"/S/Desktop/transfer/automatetheboringstuff/try_except_example.py",
+		"/S/Desktop/transfer/automatetheboringstuff/while_example.py",
+		"/S/Desktop/transfer/automatetheboringstuff/yourName.py",
+		"/S/Desktop/transfer/automatetheboringstuff/yourSpam.py",
+		"/C/Users/Isador/AppData/Roaming/Sublime Text 3/Packages/SublimeGit/SublimeGit.sublime-settings",
+		"/C/Users/Isador/AppData/Roaming/Sublime Text 3/Packages/SublimePythonIDE/SublimePython.sublime-settings",
+		"/S/Desktop/transfer/automatetheboringstuff/youSpam.py",
+		"/S/Desktop/transfer/project",
+		"/S/Documents/GitHub/smctest/bmcpowercycle.sh",
+		"/S/Documents/GitHub/smctest/README.md",
+		"/F/ServerLab archive/_Command Line/mysmcprogram/smc.sh",
+		"/F/ServerLab archive/_Command Line/mysmcprogram/bmcpowercycle.sh",
+		"/F/ServerLab archive/_Command Line/mysmcprogram/fantest.sh",
+		"/C/Users/Isador/AppData/Roaming/Sublime Text 3/Packages/User/SublimeGit.sublime-settings",
+		"/S/Desktop/transfer/go/mybot.go",
+		"/S/Desktop/transfer/go/utils.go",
+		"/S/Desktop/transfer/go/slack.go",
+		"/S/Desktop/transfer/go/hello.go"
+	],
+	"find":
+	{
+		"height": 41.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 1,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "hi.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 59,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								59,
+								59
+							]
+						],
+						"settings":
+						{
+							"auto_name": "#!/bin/bash",
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "sumtest.sh",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 92,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								92,
+								92
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 36.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.git-commit":
+	{
+		"height": 103.0
+	},
+	"output.git-flow-init":
+	{
+		"height": 0.0
+	},
+	"output.git-init":
+	{
+		"height": 103.0
+	},
+	"output.git-push":
+	{
+		"height": 32.0
+	},
+	"output.git-remote":
+	{
+		"height": 103.0
+	},
+	"pinned_build_system": "",
+	"project": "sumscripts.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": true,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

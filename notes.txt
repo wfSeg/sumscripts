@@ -1,0 +1,2 @@
+Using Sublime text in Windows, for scripts, need to make sure it is UNIX to run in Linux.
+View -> Line Endings -> Unix
