@@ -1,0 +1,5 @@
+ipmi fan 0
+ipmi fan 1
+ipmi fan 2
+ipmi fan 3
+ipmi fan 4

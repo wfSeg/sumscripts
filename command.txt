@@ -1,0 +1,13 @@
+ipmi ver
+nm detect
+nm ver
+pminfo
+dcmi cap
+sel info
+sel list
+ipmi sensor
+hdd map
+hdd info
+hdd lmap
+hdd linfo
+bbp status
