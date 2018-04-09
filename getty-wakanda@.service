@@ -25,7 +25,7 @@ ConditionPathExists=/dev/tty2
 
 [Service]
 # the VT is cleared by TTYVTDisallocate
-ExecStart=/usr/local/sbin/temp.sh
+ExecStart=/usr/local/sbin/logger.sh
 Type=simple
 StandardInput=tty-force
 StandardOutput=inherit

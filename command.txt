@@ -1,7 +1,9 @@
+ver
 ipmi ver
 nm detect
 nm ver
 pminfo
+ipmi acpi
 dcmi cap
 sel info
 sel list
@@ -11,3 +13,11 @@ hdd info
 hdd lmap
 hdd linfo
 bbp status
+nodekey list
+nm30 cupscap
+nm30 cupsdata
+nm30 cupsconfig
+nm30 cupspolicy
+nm30 cupscore
+nm30 cupsio
+nm30 cupsmem
