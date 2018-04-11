@@ -1,10 +1,10 @@
 #!/bin/bash
 # Author: Long Nguyen
 # Copied the start.sh from brian, modified it so it will launch ipmitest.sh
-# This script replaces tty4 (alt+f5) with a console 
+# This script replaces tty2 (alt+f2) with a console 
 # ipmitest.sh will launch getty-wakanda@service, the service will launch
 # logger.sh. Logger.sh is basically a wrapper for the main program
-# smc-temp.sh. The logger provides the log for the whole test.
+# smc-temp.sh. The logger provides the log for the whole test, you can find the log in cburn directory
 # smc-temp.sh contains all the tests. packy.tar is the tools package required
 # for smc-temp.sh tests.
 # 
@@ -17,11 +17,11 @@ echo " " |tee -a /dev/tty0
 wget "http://${IP}/scripts/service/getty-wakanda@.service" -O "/lib/systemd/system/getty-wakanda@.service" &> /dev/null
 if [ $? -ne 0 ]
  then
-	echo "Failed to acquire getty service for ipmi tests." | tee /dev/tty0
+	echo "Failed to acquire getty service for ipmi tests.\nNo Vibranium here." | tee /dev/tty0
 	return 1
 	exit 1
 fi
-echo "Wakanda Service installed." | tee /dev/tty0
+echo "Wakanda Service installed.\nWelcome to Wakanda." | tee /dev/tty0
 ############################################################################################################################
 /usr/bin/systemctl daemon-reload
 if [ $? -ne 0 ]
@@ -40,7 +40,7 @@ chmod +x /usr/local/sbin/smctools/sum
 
 if [ $? -ne 0 ]
  then
-	echo "Failed to get tools package." | tee /dev/tty0
+	echo "Failed to get the tools package." | tee /dev/tty0
 	return 1
 #	exit 1
 fi
@@ -55,16 +55,16 @@ wget "http://${IP}/scripts/unpacky.sh" -O "/usr/local/sbin/unpacky.sh" &> /dev/n
 wget "http://${IP}/scripts/hi.sh" -O "/usr/local/sbin/hi.sh" &> /dev/null
 wget "http://${IP}/scripts/fancmd.txt" -O "/usr/local/sbin/fancmd.txt" &> /dev/null
 wget "http://${IP}/scripts/command.txt" -O "/usr/local/sbin/command.txt" &> /dev/null
+wget "http://${IP}/scripts/fru_command.txt" -O "/usr/local/sbin/fru_command.txt" &> /dev/null
+wget "http://${IP}/scripts/cpu_freq.sh" -O "/usr/local/sbin/cpu_freq.sh" &> /dev/null
 if [ $? -ne 0 ]
  then
 	echo "Failed to get scripts." | tee /dev/tty0
 	return 1
 #	exit 1
 fi
-chmod +x /usr/local/sbin/smc-temp.sh
-chmod +x /usr/local/sbin/unpacky.sh
-chmod +x /usr/local/sbin/logger.sh
-chmod +x /usr/local/sbin/hi.sh
+
+chmod +x /usr/local/sbin/*.sh
 
 echo "SMCIPMITool scripts installed." | tee /dev/tty0
 

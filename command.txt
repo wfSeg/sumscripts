@@ -1,8 +1,11 @@
 ver
 ipmi ver
+bios ver
 nm detect
 nm ver
 pminfo
+psfruinfo
+psbbpinfo
 ipmi acpi
 dcmi cap
 sel info
@@ -13,7 +16,23 @@ hdd info
 hdd lmap
 hdd linfo
 bbp status
+bios isactivated
 nodekey list
+nm20 nmsdr
+nm20 seltime
+nm20 deviceid
+nm20 listimagesinfo
+nm20 oemgettemp
+nm20 statistics 1 0 0
+nm20 cap 0 0
+nm20 pstate
+nm20 tstate
+nm20 cpucore
+nm20 totalpower 0
+nm20 cpumemtemp
+nm20 hostcpudata
+nm20 mode
+nm20 selftest
 nm30 cupscap
 nm30 cupsdata
 nm30 cupsconfig

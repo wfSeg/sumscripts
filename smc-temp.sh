@@ -2,31 +2,35 @@
 
 # Get IPMI IP address on this system
 # ipmitool lan print | grep '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sed 's/[^0-9,.]*//g' > /usr/local/sbin/ipmi.txt
-ipmitool lan print | egrep -i IP\ Address | sed 's/[^0-9,.]*//g' | tr -d "\n" > /usr/local/sbin/ipmi.txt
-mapfile -t ipmi < /usr/local/sbin/ipmi.txt
-
-U=ADMIN
-P=ADMIN
+ipmitool lan print | egrep -i IP\ Address | sed 's/[^0-9,.]*//g' | tr -d "\n" > /usr/local/sbin/ipmi.txt;
+mapfile -t ipmi < /usr/local/sbin/ipmi.txt;
 
 # define global variables
+U=ADMIN
+P=ADMIN
+q="=============================="
 smc="/usr/local/sbin/smctools/SMCIPMITool ${ipmi[0]} $U $P";
 : <<'END'
 END
-# Gathering info loop
-mapfile -t command < /usr/local/sbin/command.txt
+# Basic SMCIMPITool commands loop, test a lot of functions
+mapfile -t command < /usr/local/sbin/command.txt;
 for i in "${command[@]}"; do
-	echo -e "\nRunning '$i' command";
+	echo -e "\n$q$q\nRunning '$i' command\n$q$q\n";
 	$smc $i;
 done
 	echo -e "\n";
 
 # Test SMCIPMITool user creation and deletion
-$smc user list
+$smc user list;
 for i in {3..10}; do
 	echo -e "Adding User ID: $i";
 	$smc user add $i user$i password$i 4;
 	if [[ $i != 10 ]]; then
 		echo -e "Testing User ID: $i";
+		$smc user test user$i password$i;
+		echo -e "Change User ID: $i access level to Operator";
+		$smc user level $i 3;
+		echo -e "Check if User ID: $i access level changed";
 		$smc user test user$i password$i;
 	elif [[ $i == 10 ]]; then
 		$smc user list;
@@ -34,40 +38,35 @@ for i in {3..10}; do
 done
 echo -e "Done testing users, deleting users now.";
 for i in {3..10}; do
-	$smc user delete $i;
+	$smc user delete $i &> /dev/null;
 done
 	$smc user list;
 
 # Test SMCIPMITool FRU read / write, restore from cfg file
-echo -e "Showing default FRU";
+echo -e "\n$q$q\nFRU Testing\n$q$q\nShowing default FRU";
 $smc ipmi fru;
 echo -e "Creating fru.backup";
-$smc ipmi frubackup /usr/local/sbin/fru.backup
-# $smc ipmi fruw ct Spaceship
+$smc ipmi frubackup /usr/local/sbin/fru.backup;
 echo -e "Customizing FRU"
-$smc ipmi fruw cp WAK-AND-DA408 &> /dev/null
-$smc ipmi fruw cs 123ABC-456DEF &> /dev/null
-$smc ipmi fruw bdt 202207041776 &> /dev/null
-$smc ipmi fruw bpn Wakandan Board &> /dev/null
-$smc ipmi fruw bs ABC123-DEF456 &> /dev/null
-$smc ipmi fruw bp X12WKN-D4 &> /dev/null
-$smc ipmi fruw pm Wakanda &> /dev/null
-$smc ipmi fruw pn Forever &> /dev/null
-$smc ipmi fruw ppm WAKANDA-BOARD &> /dev/null
-$smc ipmi fruw pv 3.0 &> /dev/null
-$smc ipmi fruw ps 10987654CBA &> /dev/null
-$smc ipmi fruw pat Property of Wakanda &> /dev/null
-echo -e "Finished modifying FRU\nDisplaying changed FRU"
-$smc ipmi fru
-echo -e "Restoring default FRU from backup\nDisplaying default FRU"
-$smc ipmi frurestore /usr/local/sbin/fru.backup
-$smc ipmi fru
+#oifs=$IFS
+#IFS=$'\n' frucmd=( $(sed -n 's,",\\",g; s,^.*$,"&",p' /usr/local/sbin/fru_command.txt) )
+#IFS=$oifs
+mapfile -t frucmd < /usr/local/sbin/fru_command.txt;
+for i in "${frucmd[@]}"; do
+	echo -e "Writing FRU '$i'";
+	$smc ipmi fruw $i &> /dev/null;
+done
+echo -e "Finished modifying FRU\n\nDisplaying changed FRU\n$q$q";
+$smc ipmi fru;
+echo -e "Restoring default FRU from backup\n\nDisplaying default FRU\n$q$q";
+$smc ipmi frurestore /usr/local/sbin/fru.backup;
+$smc ipmi fru;
 
 # Test Fan Modes and Record speed for each mode
-echo -e "Checking for supported fan modes"
-$smc ipmi fan | sed 's/[^0-9,.]*//g' | sed '/^\s*$/d' > /usr/local/sbin/supportedfanmodes.txt
-mapfile -t fanmodes < /usr/local/sbin/supportedfanmodes.txt
-for i in ${fanmodes[@]}; do
+echo -e "\n$q$q\nFan Modes Testing\n$q$q\nChecking for supported fan modes";
+$smc ipmi fan | sed 's/[^0-9,.]*//g' | sed '/^\s*$/d' > /usr/local/sbin/supportedfanmodes.txt;
+mapfile -t fanmodes < /usr/local/sbin/supportedfanmodes.txt;
+for i in "${fanmodes[@]}"; do
 	echo -e "\nTesting Fan Mode '$i'"
 	$smc ipmi fan $i &> /dev/null
 	sleep 30;
@@ -75,52 +74,65 @@ for i in ${fanmodes[@]}; do
 	$smc ipmi sensor | grep FAN
 done
 
-# Stevie G part of test
-echo -e "#########################################"
-echo -e "stress up system with cburn SAT"
-echo -e "Waiting 30s for SAT to fully run "
-./root/x86-sat/stressapptest -s 3600 &>/dev/null &
-echo -e "#########################################"
-sleep 30
-power=0 
-echo -e "Clear existing policy 1"   
-	$smc nm delpolicy 1 >/dev/null
-sleep 10
-for k in {1..10} ;do
-	p=`$smc nm20 oemgetpower | cut -d " " -f 1 `
-	echo -e "Sampling current power:$p"
-	sleep 0.5
-	let  "power+=$p"
-done
-let "power1=$(($power/10))"
-echo -e "Average Power=$power1"
-echo -e "#############################################"
-echo -e "Apply power policy #1(70% of current power)"
-echo -e "Setting power limit to $(($power1*7/10))w"
-echo -e "#############################################"
-$smc nm addpolicy 1 $(($power1*7/10)) 3000 5 >/dev/null
-$smc nm scanpolicy 
-echo -e "============================================================"
-sleep 10
-        power=0
-for k in {1..10} ;do
-	p=`$smc nm20 oemgetpower |cut -d " " -f 1 `
-	echo -e "Sampling power with policy enable:$p"
-	sleep 0.5
-	let "power+=$p"
-done
-let "power2=$(($power/10))"
-echo -e "Average power with policy enable:$power2"
-echo -e "Average power without policy:$power1"
-let "tolerance=$(($power2-$((power1*7/10))))"
-if [ $tolerance -lt 10 -a $((-$tolerance)) -lt 10 ];then
-	echo -e "tolerance:$tolerance"
-	echo -e "pass!"
+# StevenG part of test
+nm_detect=`$smc nm detect`;
+if [ "$nm_detect" != "This device supports Node Manager" ];then
+	echo -e "$q$q\nThis system doesn't support NM, skip NM test\n$q$q";
+else 
+	echo -e "$q$q\nTesting Power Policy using node manager\n$q$q\nRunning cburn SAT to stress test system";
+	echo -e "Waiting 60s for SAT to fully run";
+	mem_size=$(free -m | grep "Mem:" | cut -d":" -f2 |sed 's/  */,/g' | cut -d "," -f4);
+	/root/x86-sat/./stressapptest -M $((mem_size*9/10)) -s 3600 &>/dev/null &
+	secs=60
+	while [ $secs -gt 0 ]; do
+		echo -ne "Test Starts in: $secs\033[0K\r";
+		sleep 1;
+		: $((secs--));
+	done
+	power=0
+	echo -e "Clearing policy ID:1";
+	$smc nm delpolicy 1 &>/dev/null;
+	echo -e "Checking for policies";
+	$smc nm20 scanpolicy;
+	for k in {1..10} ;do
+		p=`$smc nm20 oemgetpower | cut -d " " -f 1 `;
+		echo -e "Sampling current power: $p W";
+		sleep 0.5;
+		let  "power+=$p";
+	done
+	let "power1=$(($power/10))";
+	echo -e "$q$q\nAverage Power = $power1 W";
+	echo -ne "Measuring CPU frequency, please wait\n";
+	sh /usr/local/sbin/cpu_freq.sh;
+	echo -e "Apply power policy #1 (80% of current power)";
+	echo -e "Setting power limit to $(($power1*8/10)) W";
+	$smc nm addpolicy 1 $(($power1*8/10)) 6000 10 >/dev/null;
+	$smc nm scanpolicy;
+	echo -e "";
+	sleep 10;
+	power=0
+	for k in {1..10} ;do
+		p=`$smc nm20 oemgetpower |cut -d " " -f 1 `;
+		echo -e "Sampling power with policy enable: $p W";
+		sleep 0.5;
+		let "power+=$p";
+	done
+	let "power2=$(($power/10))";
+	echo -e "$q$q\nAverage power with policy enable: $power2 W";
+	echo -ne "Measuring CPU frequency, please wait\n";
+	sh /usr/local/sbin/cpu_freq.sh;
+	echo -e "Average power without policy: $power1 W";
+	let "tolerance=$(($power2-$((power1*8/10))))";
+	if [ $tolerance -lt 10 -a $((-$tolerance)) -lt 10 ];then
+		echo -e "Tolerance: $tolerance W";
+		echo -e "$q$q\nPASS!\n$q$q";
 	else 
-	echo -e "Fail,please check logs"
+		echo -e "$q$q\nFAIL\n$q$q\nPlease check logs or check if system overheated";
+		echo -e "Make sure system is removed from SPM!";
+	fi
+	echo -e "Clear existing policy 1 and nm power policy test is finished";
+	echo -e "SAT will be killed automatically, no worry.";
+	$smc nm delpolicy 1 >/dev/null;
+	pin=`pgrep stressapptest`;
+	kill $pin;
 fi
-	echo -e "Clear existing policy 1 and nm power policy test is finished"
-	echo -e "SAT will be killed automatically, no worry."
-	$smc nm delpolicy 1 >/dev/null
-pin=`pgrep stressapptest`
-kill $pin

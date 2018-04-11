@@ -6,3 +6,15 @@ HOW TO RUN
 
 Using Sublime text in Windows, for scripts, need to make sure it is UNIX to run in Linux.
 View -> Line Endings -> Unix
+
+Directories
+	For server script testing
+	/var/www/html/wakanda.com/public_html/scripts/smc-temp.sh 
+	For local system testing
+	/usr/local/sbin/smc-temp.sh
+
+misc
+- when calling a script inside smc-temp.sh, it's better to use "sh script.sh" instead of "./script.sh" - i guess?
+- when using mapfile, and calling it with
+	for i in "${frucmd[@]}";
+	- use quotes! " " around the array, otherwise it will call each word as an individual value, instead of each line.
