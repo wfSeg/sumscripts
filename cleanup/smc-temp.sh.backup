@@ -10,13 +10,8 @@ U=ADMIN
 P=ADMIN
 q="=============================="
 smc="/usr/local/sbin/smctools/SMCIPMITool ${ipmi[0]} $U $P";
-sum="/usr/local/sbin/smctools/sum -i ${ipmi[0]} -u $U -p $P -c"
 : <<'END'
 END
-# Use SUM to create backup of BMC config
-echo -e "Backing up BMC config to /usr/local/sbin/smctools/bmccfg.txt";
-$sum getbmccfg --file /usr/local/sbin/smctools/bmccfg.txt &> /dev/null;
-
 # Basic SMCIMPITool commands loop, test a lot of functions
 mapfile -t command < /usr/local/sbin/command.txt;
 for i in "${command[@]}"; do
@@ -141,7 +136,3 @@ else
 	pin=`pgrep stressapptest`;
 	kill $pin;
 fi
-
-# Use SUM to restore BMC to default config
-echo -e "Restoring BMC config from /usr/local/sbin/smctools/bmccfg.txt";
-$sum changebmccfg --file /usr/local/sbin/smctools/bmccfg.txt

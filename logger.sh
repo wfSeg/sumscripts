@@ -22,4 +22,3 @@ echo -e "Test on $IPMI started on:" 2>&1 | tee -a $RDIR/$IPMI.log;
 date 2>&1 | tee -a $RDIR/$IPMI.log;
 sh /usr/local/sbin/smc-temp.sh 2>&1 | tee -a $RDIR/$IPMI-$(date +%Y-%m-%d).log;
 echo -e "Test done, please see Logs at $RDIR/$IPMI.log";
-echo -e "Please change fan mode back to standard/optimal";
