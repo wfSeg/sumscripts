@@ -1,24 +1,26 @@
 #!/bin/bash
 
 # Get IPMI IP address on this system
-# ipmitool lan print | grep '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sed 's/[^0-9,.]*//g' > /usr/local/sbin/ipmi.txt
-ipmitool lan print | egrep -i IP\ Address | sed 's/[^0-9,.]*//g' | tr -d "\n" > /usr/local/sbin/ipmi.txt;
-mapfile -t ipmi < /usr/local/sbin/ipmi.txt;
+# ipmitool lan print | grep '[0-9]\{1,3\}\.[0-9]\{1,3\}\.[0-9]\{1,3\}' | sed 's/[^0-9,.]*//g' > ${DIR}/ipmi.txt
+ipmitool lan print | egrep -i IP\ Address | sed 's/[^0-9,.]*//g' | tr -d "\n" > ${DIR}/ipmi.txt;
+mapfile -t ipmi < ${DIR}/ipmi.txt;
 
 # define global variables
 U=ADMIN
 P=ADMIN
+DIR="${DIR}"
 q="=============================="
-smc="/usr/local/sbin/smctools/SMCIPMITool ${ipmi[0]} $U $P";
-sum="/usr/local/sbin/smctools/sum -i ${ipmi[0]} -u $U -p $P -c"
+smc="${DIR}/smctools/SMCIPMITool ${ipmi[0]} $U $P";
+sumtool="${DIR}/smctools/sum -i ${ipmi[0]} -u $U -p $P -c"
 : <<'END'
 END
 # Use SUM to create backup of BMC config
-echo -e "Backing up BMC config to /usr/local/sbin/smctools/bmccfg.txt";
-$sum getbmccfg --file /usr/local/sbin/smctools/bmccfg.txt &> /dev/null;
+echo -e "Backing up BMC config to ${DIR}/smctools/bmccfg.txt";
+$sumtool getbmccfg --file ${DIR}/smctools/bmccfg.txt &> /dev/null;
+
 
 # Basic SMCIMPITool commands loop, test a lot of functions
-mapfile -t command < /usr/local/sbin/command.txt;
+mapfile -t command < ${DIR}/command.txt;
 for i in "${command[@]}"; do
 	echo -e "\n$q$q\nRunning '$i' command\n$q$q\n";
 	$smc $i;
@@ -51,12 +53,12 @@ done
 echo -e "\n$q$q\nFRU Testing\n$q$q\nShowing default FRU";
 $smc ipmi fru;
 echo -e "Creating fru.backup";
-$smc ipmi frubackup /usr/local/sbin/fru.backup;
+$smc ipmi frubackup ${DIR}/fru.backup;
 echo -e "Customizing FRU"
 #oifs=$IFS
-#IFS=$'\n' frucmd=( $(sed -n 's,",\\",g; s,^.*$,"&",p' /usr/local/sbin/fru_command.txt) )
+#IFS=$'\n' frucmd=( $(sed -n 's,",\\",g; s,^.*$,"&",p' ${DIR}/fru_command.txt) )
 #IFS=$oifs
-mapfile -t frucmd < /usr/local/sbin/fru_command.txt;
+mapfile -t frucmd < ${DIR}/fru_command.txt;
 for i in "${frucmd[@]}"; do
 	echo -e "Writing FRU '$i'";
 	$smc ipmi fruw $i &> /dev/null;
@@ -64,13 +66,13 @@ done
 echo -e "Finished modifying FRU\n\nDisplaying changed FRU\n$q$q";
 $smc ipmi fru;
 echo -e "Restoring default FRU from backup\n\nDisplaying default FRU\n$q$q";
-$smc ipmi frurestore /usr/local/sbin/fru.backup;
+$smc ipmi frurestore ${DIR}/fru.backup;
 $smc ipmi fru;
 
 # Test Fan Modes and Record speed for each mode
 echo -e "\n$q$q\nFan Modes Testing\n$q$q\nChecking for supported fan modes";
-$smc ipmi fan | sed 's/[^0-9,.]*//g' | sed '/^\s*$/d' > /usr/local/sbin/supportedfanmodes.txt;
-mapfile -t fanmodes < /usr/local/sbin/supportedfanmodes.txt;
+$smc ipmi fan | sed 's/[^0-9,.]*//g' | sed '/^\s*$/d' > ${DIR}/supportedfanmodes.txt;
+mapfile -t fanmodes < ${DIR}/supportedfanmodes.txt;
 for i in "${fanmodes[@]}"; do
 	echo -e "\nTesting Fan Mode '$i'"
 	$smc ipmi fan $i &> /dev/null
@@ -108,7 +110,7 @@ else
 	let "power1=$(($power/10))";
 	echo -e "$q$q\nAverage Power = $power1 W";
 	echo -ne "Measuring CPU frequency, please wait\n";
-	sh /usr/local/sbin/cpu_freq.sh;
+	sh ${DIR}/cpu_freq.sh;
 	echo -e "Apply power policy #1 (80% of current power)";
 	echo -e "Setting power limit to $(($power1*8/10)) W";
 	$smc nm addpolicy 1 $(($power1*8/10)) 6000 10 >/dev/null;
@@ -125,7 +127,7 @@ else
 	let "power2=$(($power/10))";
 	echo -e "$q$q\nAverage power with policy enable: $power2 W";
 	echo -ne "Measuring CPU frequency, please wait\n";
-	sh /usr/local/sbin/cpu_freq.sh;
+	sh ${DIR}/cpu_freq.sh;
 	echo -e "Average power without policy: $power1 W";
 	let "tolerance=$(($power2-$((power1*8/10))))";
 	if [ $tolerance -lt 10 -a $((-$tolerance)) -lt 10 ];then
@@ -143,5 +145,5 @@ else
 fi
 
 # Use SUM to restore BMC to default config
-echo -e "Restoring BMC config from /usr/local/sbin/smctools/bmccfg.txt";
-$sum changebmccfg --file /usr/local/sbin/smctools/bmccfg.txt
+echo -e "Restoring BMC config from ${DIR}/smctools/bmccfg.txt";
+$sumtool changebmccfg --file ${DIR}/smctools/bmccfg.txt

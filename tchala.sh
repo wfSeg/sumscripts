@@ -12,3 +12,4 @@ DIR="/usr/local/sbin"
 smc="${DIR}/smctools/SMCIPMITool ${ipmi[0]} $U $P" 
 echo $smc
 $smc ipmi ver
+# ok, used double quotes, and {} braces for DIR, it works now. Finally.
